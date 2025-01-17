@@ -9,5 +9,9 @@ defineProps({ user: String })
     <Head title="Welcome" />
     <h1>Welcome</h1>
     <p>Hello, {{ user }} welcome to your first Inertia app!</p>
+    <form method="POST">
+      <input type="url" v-model="url">
+      <button type="submit">Short it!</button>
+    </form>
   </Layout>
 </template>
