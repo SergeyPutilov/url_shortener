@@ -15,18 +15,32 @@ class UrlShortenerController extends Controller
         ]);
     }
 
-    public function create(Request $request)
+    public function store(Request $request)
     {
         $request->validate([
             'url' => 'required|url'
         ]);
 
-        $newUrl = uniqid();
+        do {
+            $newUrl = uniqid();
+        } while (Url::where('shortened_url', $newUrl)->exists());
+
         $url = Url::create([
             'original_url' => $request->url,
             'shortened_url' => $newUrl
         ]);
 
-        return $url;
+        return url($newUrl);
+    }
+
+    public function redirect(string $shortened)
+    {
+        $result = Url::where('shortened_url', $shortened)->first();
+        if(!$result){
+            abort(404);
+        }
+
+        // redirect to url
+        return redirect($result->original_url);
     }
 }

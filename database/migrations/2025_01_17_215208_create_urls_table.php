@@ -8,10 +8,11 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('urls', function (Blueprint $table) {
-            $table->ulid('id');
+            $table->ulid('id')->primary();
             $table->string('original_url');
-            $table->string('shortened_url');
+            $table->string('shortened_url')->unique();
             $table->timestamps();
+
         });
     }
 
