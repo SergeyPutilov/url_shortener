@@ -14,10 +14,10 @@ RUN apt-get update -y && apt-get install -y \
     zip \
     && docker-php-ext-install pdo pdo_pgsql zip
 
-# Install Node.js and npm using n version manager
-RUN curl -fsSL https://deb.nodesource.com/setup_22.x | bash \
-    apt-get install -y nodejs && \
-    npm install -g npm \
+## Install Node.js and npm
+#RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
+#    && apt-get install nodejs -y \
+#    && apt-get install npm -y
 
 # Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
@@ -29,10 +29,10 @@ COPY . .
 RUN composer install --optimize-autoloader --no-dev
 
 ## Install Node.js dependencies and build assets
-RUN npm install && npm run build
+#RUN npm install && npm run build
 
 ## Set permissions
-RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache
+RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 #
 ## Generate application key
 RUN php artisan key:generate
