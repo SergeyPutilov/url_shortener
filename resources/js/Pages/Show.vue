@@ -15,6 +15,10 @@ async function handleSubmit() {
   urls.value.push(response.data)
 }
 
+function copyUrl(url) {
+  navigator.clipboard.writeText(url);
+}
+
 
 </script>
 
@@ -35,7 +39,7 @@ async function handleSubmit() {
               class="bg-gray-200 p-2 flex items-center justify-between gap-2">
             {{ url }}
 
-            <button title="Copy">
+            <button title="Copy" @click="copyUrl(url)">
               <svg clip-rule="evenodd" class="h-5" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2"
                    viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path
